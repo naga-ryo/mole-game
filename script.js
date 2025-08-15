@@ -1,19 +1,26 @@
-let lastTouchTime = 0;
+// ズーム無効化（ダブルタップ対策 & 二本指ズーム無効）
+let lastTouchEnd = 0;
 
-document.addEventListener('touchstart', function(event) {
-    const now = Date.now();
-
-    // 2回目のタップまでの時間が600ms以内ならズーム防止
-    if (now - lastTouchTime <= 600) {
-        event.preventDefault();
-    }
-    lastTouchTime = now;
-
-    // 2本指以上のタッチもズーム防止
+document.addEventListener('touchstart', function (event) {
     if (event.touches.length > 1) {
+        // 二本指ズーム防止
         event.preventDefault();
     }
 }, { passive: false });
+
+document.addEventListener('touchend', function (event) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+        // ダブルタップズーム防止
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, { passive: false });
+
+// iOS Safariでタップ遅延を防ぐ
+document.addEventListener('gesturestart', function (event) {
+    event.preventDefault();
+});
 
 const cells = document.querySelectorAll(".mole-cell");
 let variable = 0;
@@ -77,6 +84,8 @@ cells.forEach(cell => {
   cell.classList.add("active-cell");
 })
 
+let moleTimer = null;
+
 function spawnMole() {
   document.querySelectorAll(".mole").forEach(m => m.remove());
 
@@ -84,24 +93,19 @@ function spawnMole() {
   moleWrapper.classList.add("mole");
   moleWrapper.innerHTML = moleSVG;
 
-  moleWrapper.onclick = () => {
-    const field = moleWrapper.parentElement;
-    if(!field.classList.contains("first-hit") && !field.classList.contains("second-hit")) {
-      field.classList.add("first-hit");
-      field.style.backgroundColor = "red";
-    }else if(field.classList.contains("first-hit")) {
-      field.classList.remove("first-hit");
-      field.classList.remove("active-cell");
-      field.style.backgroundColor = "black";
-      if(!document.querySelector(".active-cell")) {
-        stopTimer();
-        const finalTime = document.getElementById('time-display').textContent;
-        alert(`ゲーム終了！最終タイム: ${finalTime}`);
-      }
-    }
-      moleWrapper.remove();
-    };
+  let touchTriggered = false;
 
+  moleWrapper.addEventListener("click", (e) => {
+    if (touchTriggered) return; // タッチ済みならスキップ
+    hitMole(moleWrapper);
+  });
+
+  moleWrapper.addEventListener("touchstart", (e) => {
+    touchTriggered = true;
+    hitMole(moleWrapper);
+    e.preventDefault();
+    setTimeout(() => touchTriggered = false, 400); // 次のクリック許可
+  }, { passive: false });
     
     if(!document.querySelector(".active-cell")) {
       return;
@@ -112,7 +116,27 @@ function spawnMole() {
   }
 
   const nextTime = Math.random() * variable + constant;
-  setTimeout(spawnMole, nextTime);
+  moleTimer = setTimeout(spawnMole, nextTime);
+}
+
+function hitMole(moleWrapper) {
+    const field = moleWrapper.parentElement;
+
+    if (!field.classList.contains("first-hit") && !field.classList.contains("second-hit")) {
+        field.classList.add("first-hit");
+        field.style.backgroundColor = "red";
+    } else if (field.classList.contains("first-hit")) {
+        field.classList.remove("first-hit");
+        field.classList.remove("active-cell");
+        field.style.backgroundColor = "black";
+        if (!document.querySelector(".active-cell")) {
+            stopTimer();
+            const finalTime = document.getElementById('time-display').textContent;
+            alert(`ゲーム終了！最終タイム: ${finalTime}`);
+        }
+    }
+
+    moleWrapper.remove();
 }
 
 document.getElementById("start-game").addEventListener("click", function() {
@@ -141,8 +165,9 @@ document.getElementById("start-game").addEventListener("click", function() {
 });
 
 function setMoleSpeed(min, max) {
-    variable = (max - min)*1000;
+    variable = (max - min) * 1000;
     constant = min * 1000;
+    if (moleTimer) clearTimeout(moleTimer);
     spawnMole();
     startTimer();
     document.getElementById("mole-speed-container").style.display = "none";
