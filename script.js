@@ -65,7 +65,6 @@ cells.forEach(cell => {
 function spawnMole() {
   document.querySelectorAll(".mole").forEach(m => m.remove());
 
-  const index = Math.floor(Math.random() * cells.length);
   const moleWrapper = document.createElement("div");
   moleWrapper.classList.add("mole");
   moleWrapper.innerHTML = moleSVG;
@@ -86,6 +85,7 @@ function spawnMole() {
     };
 
     const activeCells = document.querySelectorAll(".active-cell");
+    const index = Math.floor(Math.random() * activeCells.length);
 
   if(!activeCells){
     alert("CLEAR");
