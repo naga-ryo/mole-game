@@ -1,8 +1,17 @@
+let lastTouchEnd = 0;
+
+document.addEventListener('touchend', function(event) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault(); // ダブルタップズーム防止
+    }
+    lastTouchEnd = now;
+}, false);
+
 const cells = document.querySelectorAll(".mole-cell");
 let variable = 0;
 let constant = 0;
 
-// モグラSVGテンプレート（小型化バージョン）
 const moleSVG = `
 <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
   <style>
@@ -61,7 +70,6 @@ cells.forEach(cell => {
   cell.classList.add("active-cell");
 })
 
-// モグラ出現関数
 function spawnMole() {
   document.querySelectorAll(".mole").forEach(m => m.remove());
 
@@ -106,7 +114,6 @@ document.getElementById("start-game").addEventListener("click", function() {
 
     document.getElementById("speed-mode").textContent = `（${selectedSpeed}）`;
 
-    // ここで条件分岐して速度設定
     switch (selectedSpeed) {
         case "slow":
             setMoleSpeed(1.5, 2.5);
@@ -138,7 +145,6 @@ document.getElementById("start-game").addEventListener("click", function() {
     }
 });
 
-// モグラの出現時間を設定する関数（例）
 function setMoleSpeed(min, max) {
     variable = (max - min)*1000;
     constant = min * 1000;

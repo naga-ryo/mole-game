@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+html {
+    touch-action: manipulation;
+}
+
 body {
     background-color: #a8711e;
     width: 100%;
