@@ -116,7 +116,7 @@ document.getElementById("start-game").addEventListener("click", function() {
 
     switch (selectedSpeed) {
         case "easy":
-            setMoleSpeed(0.05, 2.0);
+            setMoleSpeed(1.5, 2.0);
             break;
         case "normal":
             setMoleSpeed(0.9, 1.2);
