@@ -58,7 +58,7 @@ body {
     border-radius: 1vh;
 }
 
-#score-display {
+#time-display {
     font-size: min(1.5vh, 2.5vw);
     color: white;
     margin-top: 1vh;

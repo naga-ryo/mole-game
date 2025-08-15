@@ -1,6 +1,4 @@
 const cells = document.querySelectorAll(".mole-cell");
-const scoreDisplay = document.getElementById("score-display");
-let score = 0;
 
 // モグラSVGテンプレート（小型化バージョン）
 const moleSVG = `
@@ -70,8 +68,6 @@ function spawnMole() {
   moleWrapper.innerHTML = moleSVG;
 
   moleWrapper.onclick = () => {
-    score++;
-    scoreDisplay.textContent = "スコア: " + score;
     const field = moleWrapper.parentElement;
     if(!field.classList.contains("first-hit") && !field.classList.contains("second-hit")) {
       field.classList.add("first-hit");
@@ -80,13 +76,17 @@ function spawnMole() {
       field.classList.remove("first-hit");
       field.classList.remove("active-cell");
       field.style.backgroundColor = "black";
+      if(!document.querySelector(".active-cell")) {
+        stopTimer();
+        const finalTime = document.getElementById('time-display').textContent;
+        alert(`ゲーム終了！最終タイム: ${finalTime}`);
+      }
     }
       moleWrapper.remove();
     };
 
     
     if(!document.querySelector(".active-cell")) {
-      alert("CLEAR");
       return;
     }else{
     const activeCells = document.querySelectorAll(".active-cell");
@@ -99,3 +99,4 @@ function spawnMole() {
 }
 
 spawnMole();
+startTimer();
