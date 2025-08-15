@@ -81,11 +81,8 @@ function spawnMole() {
       field.style.backgroundColor = "red";
     }else if(field.classList.contains("first-hit")) {
       field.classList.remove("first-hit");
-      field.classList.add("second-hit");
-      field.style.backgroundColor = "black";
-    }else if(field.classList.contains("second-hit")) {
-      field.classList.remove("second-hit");
       field.classList.remove("active-cell");
+      field.style.backgroundColor = "black";
     }
       moleWrapper.remove();
     };
