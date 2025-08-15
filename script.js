@@ -61,8 +61,6 @@ cells.forEach(cell => {
   cell.classList.add("active-cell");
 })
 
-const activeCells = document.querySelectorAll(".active-cell");
-
 // モグラ出現関数
 function spawnMole() {
   document.querySelectorAll(".mole").forEach(m => m.remove());
@@ -86,6 +84,8 @@ function spawnMole() {
     }
       moleWrapper.remove();
     };
+
+    const activeCells = document.querySelectorAll(".active-cell");
 
   if(!activeCells){
     alert("CLEAR");
