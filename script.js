@@ -57,6 +57,12 @@ const moleSVG = `
   </g>
 </svg>`;
 
+cells.forEach(cell => {
+  cell.classList.add("active-cell");
+})
+
+const activeCells = document.querySelectorAll(".active-cell");
+
 // モグラ出現関数
 function spawnMole() {
   document.querySelectorAll(".mole").forEach(m => m.remove());
@@ -69,12 +75,29 @@ function spawnMole() {
   moleWrapper.onclick = () => {
     score++;
     scoreDisplay.textContent = "スコア: " + score;
-    moleWrapper.remove();
-  };
+    const field = moleWrapper.parentElement;
+    if(!field.classList.contains("first-hit")) {
+      field.classList.add("first-hit");
+      field.style.backgroundColor = "red";
+    }else if(field.classList.contains("first-hit")) {
+      field.classList.remove("first-hit");
+      field.classList.add("second-hit");
+      field.style.backgroundColor = "black";
+    }else if(field.classList.contains("second-hit")) {
+      field.classList.remove("second-hit");
+      field.classList.remove("active-cell");
+    }
+      moleWrapper.remove();
+    };
 
-  cells[index].appendChild(moleWrapper);
+  if(!activeCells){
+    alert("CLEAR");
+    return;
+  }else{
+    activeCells[index].appendChild(moleWrapper);
+  }
 
-  const nextTime = Math.random() * 500 + Math.random() * 900 + 100;
+  const nextTime = Math.random() * 900 + 100;
   setTimeout(spawnMole, nextTime);
 }
 

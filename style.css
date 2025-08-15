@@ -51,7 +51,7 @@ body {
 #moles-game{
     display: grid;
     grid-template-columns: repeat(4, 20vw);
-    grid-template-rows: repeat(8, 10vh);
+    grid-template-rows: repeat(7, 10vh);
     gap: min(1vh, 2vw);
     background: #ccc;
     padding: min(1vh, 2vw);
