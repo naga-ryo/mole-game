@@ -76,7 +76,7 @@ function spawnMole() {
     score++;
     scoreDisplay.textContent = "スコア: " + score;
     const field = moleWrapper.parentElement;
-    if(!field.classList.contains("first-hit")) {
+    if(!field.classList.contains("first-hit") && !field.classList.contains("second-hit")) {
       field.classList.add("first-hit");
       field.style.backgroundColor = "red";
     }else if(field.classList.contains("first-hit")) {
