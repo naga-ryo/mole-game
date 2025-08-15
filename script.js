@@ -84,13 +84,13 @@ function spawnMole() {
       moleWrapper.remove();
     };
 
+    
+    if(!document.querySelector(".active-cell")) {
+      alert("CLEAR");
+      return;
+    }else{
     const activeCells = document.querySelectorAll(".active-cell");
     const index = Math.floor(Math.random() * activeCells.length);
-
-  if(!activeCells){
-    alert("CLEAR");
-    return;
-  }else{
     activeCells[index].appendChild(moleWrapper);
   }
 
