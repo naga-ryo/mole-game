@@ -115,29 +115,17 @@ document.getElementById("start-game").addEventListener("click", function() {
     document.getElementById("speed-mode").textContent = `（${selectedSpeed}）`;
 
     switch (selectedSpeed) {
-        case "slow":
-            setMoleSpeed(1.5, 2.5);
-            break;
         case "easy":
-            setMoleSpeed(1.3, 2.0);
+            setMoleSpeed(0.05, 2.0);
             break;
         case "normal":
-            setMoleSpeed(0.9, 1.5);
+            setMoleSpeed(0.9, 1.2);
             break;
         case "hard":
-            setMoleSpeed(0.5, 1.0);
+            setMoleSpeed(0.4, 1.0);
             break;
         case "expert":
-            setMoleSpeed(0.2, 1.0);
-            break;
-        case "master":
-            setMoleSpeed(0.1, 0.8);
-            break;
-        case "legend":
-            setMoleSpeed(0.1, 0.5);
-            break;
-        case "god":
-            setMoleSpeed(0.05, 0.2);
+            setMoleSpeed(0.05, 1.0);
             break;
         case "impossible":
             setMoleSpeed(0.01, 0.05);
