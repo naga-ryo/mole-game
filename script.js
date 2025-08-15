@@ -1,4 +1,6 @@
 const cells = document.querySelectorAll(".mole-cell");
+let variable = 0;
+let constant = 0;
 
 // モグラSVGテンプレート（小型化バージョン）
 const moleSVG = `
@@ -94,9 +96,53 @@ function spawnMole() {
     activeCells[index].appendChild(moleWrapper);
   }
 
-  const nextTime = Math.random() * 900 + 100;
+  const nextTime = Math.random() * variable + constant;
   setTimeout(spawnMole, nextTime);
 }
 
-spawnMole();
-startTimer();
+document.getElementById("start-game").addEventListener("click", function() {
+    // 選択された値を取得
+    const selectedSpeed = document.getElementById("mole-speed").value;
+
+    document.getElementById("speed-mode").textContent = `（${selectedSpeed}）`;
+
+    // ここで条件分岐して速度設定
+    switch (selectedSpeed) {
+        case "slow":
+            setMoleSpeed(1.5, 2.5);
+            break;
+        case "easy":
+            setMoleSpeed(1.3, 2.0);
+            break;
+        case "normal":
+            setMoleSpeed(0.9, 1.5);
+            break;
+        case "hard":
+            setMoleSpeed(0.5, 1.0);
+            break;
+        case "expert":
+            setMoleSpeed(0.2, 1.0);
+            break;
+        case "master":
+            setMoleSpeed(0.1, 0.8);
+            break;
+        case "legend":
+            setMoleSpeed(0.1, 0.5);
+            break;
+        case "god":
+            setMoleSpeed(0.05, 0.2);
+            break;
+        case "impossible":
+            setMoleSpeed(0.01, 0.05);
+            break;
+    }
+});
+
+// モグラの出現時間を設定する関数（例）
+function setMoleSpeed(min, max) {
+    variable = (max - min)*1000;
+    constant = min * 1000;
+    spawnMole();
+    startTimer();
+    document.getElementById("mole-speed-container").style.display = "none";
+}

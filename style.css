@@ -15,6 +15,48 @@ body {
     justify-content: center;
 }
 
+#mole-speed-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background-color: aliceblue;
+}
+
+#mole-speed-comment{
+    font-size: min(1.5vh, 2.5vw);
+    color: black;
+    margin-bottom: 5vh;
+}
+
+#mole-speed {
+    width: 80%;
+    height: 5vh;
+    font-size: min(1.5vh, 2.5vw);
+    padding: 0.5vh;
+    border-radius: 1vh;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+#start-game{
+    color: white;
+    background-color: #a8711e;
+    border: none;
+    padding: 1vh 2vw;
+    border-radius: 1vh;
+    font-size: min(1.5vh, 2.5vw);
+    cursor: pointer;
+    margin-top: 5vh;
+}
+
 #mole-game-container {
     position: absolute;
     top: 50%;

@@ -8,8 +8,23 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <div id="mole-speed-container">
+        <p id="mole-speed-comment">スピードのモードを選択してください</p>
+        <select id="mole-speed">
+            <option value="slow">SLOW</option>
+            <option value="easy">EASY</option>
+            <option value="normal">NORMAL</option>
+            <option value="hard">HARD</option>
+            <option value="expert">EXPERT</option>
+            <option value="master">MASTER</option>
+            <option value="legend">LEGEND</option>
+            <option value="god">GOD</option>
+            <option value="impossible">IMPOSSIBLE</option>
+        </select>
+        <button id="start-game">ゲーム開始</button>
+    </div>
     <div id="mole-game-container">
-        <p id="mole-game-title" style="color:white;">モグラ叩き</p>
+        <p id="mole-game-title" style="color:white;">モグラ叩き<span id="speed-mode">（選択前）</span></p>
         <div id="moles-game">
             <!-- モグラのマス -->
             <div class="mole-cell"></div>
