@@ -1,12 +1,19 @@
-let lastTouchEnd = 0;
+let lastTouchTime = 0;
 
-document.addEventListener('touchend', function(event) {
+document.addEventListener('touchstart', function(event) {
     const now = Date.now();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault(); // ダブルタップズーム防止
+
+    // 2回目のタップまでの時間が600ms以内ならズーム防止
+    if (now - lastTouchTime <= 600) {
+        event.preventDefault();
     }
-    lastTouchEnd = now;
-}, false);
+    lastTouchTime = now;
+
+    // 2本指以上のタッチもズーム防止
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
 
 const cells = document.querySelectorAll(".mole-cell");
 let variable = 0;
