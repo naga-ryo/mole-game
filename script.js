@@ -1,17 +1,9 @@
 // ズーム無効化（ダブルタップ対策 & 二本指ズーム無効）
 let lastTouchEnd = 0;
 
-document.addEventListener('touchstart', function (event) {
-    if (event.touches.length > 1) {
-        // 二本指ズーム防止
-        event.preventDefault();
-    }
-}, { passive: false });
-
 document.addEventListener('touchend', function (event) {
     const now = Date.now();
-    if (now - lastTouchEnd <= 300) {
-        // ダブルタップズーム防止
+    if (now - lastTouchEnd <= 600) { 
         event.preventDefault();
     }
     lastTouchEnd = now;
